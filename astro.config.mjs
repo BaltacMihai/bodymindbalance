@@ -3,8 +3,5 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  site: "https://baltacmihai.com/bodymindbalance/",
-  build: {
-    assetsPrefix: ".",
-  },
+  site: "https://baltacmihai.com/bodymindbalance",
 });
