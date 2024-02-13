@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import logoImg from "./../../assets/logo.svg";
+import callIcon from "./../../assets/call.svg";
+import emailIcon from "./../../assets/sms.svg";
+import locationIcon from "./../../assets/location.svg";
+
+import links from "./../../dictionary/link";
+import common from "../../dictionary/common";
+import LinkBtn from "../atoms/LinkBtn.astro";
+
+import footerText from "./../../dictionary/footer";
+
+const footerLinks = {
+  about: [links.aboutZouk, links.courses, links.price, links.events],
+  utils: [links.termsConditions, links.confidentialPolicy, links.anpc],
+};
+---
+
+<footer class="footer">
+  <div class="footer__content">
+    <div class="footer__content__item">
+      <div class="title">
+        <Image src={logoImg} alt={`${common.name} Logo`} class="logo" />
+        <p class="title__text">{common.name}</p>
+      </div>
+      <p class="content">
+        Zouk este mai mult decât un dans - este o experiență emoțională și
+        artistică. Mișcările sale ondulate, învăluindu-se în ritmul muzicii,
+        creează o legătură profundă între dansatori.
+      </p>
+    </div>
+    <div class="footer__content__item">
+      <div class="title">
+        <p class="title__text">{footerText.titles[0]}</p>
+      </div>
+      <div class="content">
+        {
+          footerLinks.about?.map((link) => {
+            return <LinkBtn value={link} type="simple simple--white" />;
+          })
+        }
+      </div>
+    </div>
+    <div class="footer__content__item">
+      <div class="title">
+        <p class="title__text">{footerText.titles[1]}</p>
+      </div>
+      <div class="content">
+        {
+          footerLinks.utils?.map((link) => {
+            return <LinkBtn value={link} type="simple simple--white" />;
+          })
+        }
+      </div>
+    </div>
+    <div class="footer__content__item">
+      <div class="title">
+        <p class="title__text">{footerText.titles[2]}</p>
+      </div>
+      <div class="content">
+        <a href={links.phone.href} rel="nofollow">
+          <Image src={callIcon} alt="Phone Icon" />{links.phone.name}</a
+        >
+        <a href={links.email.href} rel="nofollow">
+          <Image src={emailIcon} alt="Email Icon" />
+          {links.email.name}</a
+        >
+
+        <a href={links.location.href} rel="nofollow">
+          <Image src={locationIcon} alt="Location Icon" />
+          {links.location.name}</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="footer__disclaimer">
+    <p>
+      <span class="bold">{footerText.disclaimer.bold}</span>
+      {footerText.disclaimer.support}
+    </p>
+    <p class="small">
+      {footerText.buildBy}
+      <a href={links.buildBy.href}>{links.buildBy.name}</a>
+    </p>
+  </div>
+</footer>
+
+<style lang="scss" scoped>
+  @use "../../styles/index.scss" as *;
+
+  .footer {
+    background-color: $cl-primary;
+    padding: 2rem 0;
+    &__content {
+      @extend %max-content-width;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+
+      @include responsive(lg) {
+        flex-direction: column;
+        gap: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        @include responsive(lg) {
+          gap: 1rem;
+        }
+
+        &:first-child {
+          flex: 0 0 26%;
+        }
+        flex: 0 0 calc((100% - 2rem * 3 - 45%) / 3);
+
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          .logo {
+            filter: brightness(0) invert(1);
+            height: 50px;
+            width: 50px;
+          }
+          &__text {
+            @extend %text;
+            color: $cl-background;
+            font-weight: bold;
+          }
+        }
+        .content {
+          color: $cl-gray-pink;
+          @extend %sub-text;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+
+          a {
+            text-decoration: none;
+            color: $cl-gray-pink;
+
+            display: flex;
+            gap: 0.5rem;
+          }
+        }
+      }
+    }
+    &__disclaimer {
+      @extend %max-content-width;
+
+      text-align: center;
+      border-top: 1px solid $cl-gray-pink;
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      p {
+        color: $cl-background;
+        @extend %sub-text;
+
+        .bold {
+          font-weight: bolder;
+        }
+
+        &.small {
+          @extend %sub-text;
+          font-size: 14px;
+          color: $cl-gray-pink;
+
+          a {
+            color: $cl-gray-pink;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+</style>

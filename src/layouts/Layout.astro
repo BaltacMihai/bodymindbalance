@@ -1,0 +1,122 @@
+---
+import Navbar from "../shared/components/organisms/Navbar.astro";
+import { Image } from "astro:assets";
+import Btn from "../shared/components/atoms/Btn.astro";
+import Dropdown from "../shared/components/molecules/Dropdown.astro";
+
+import icon from "../assets/icon.png";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Navbar>
+      <Image src={icon} alt="Icon" class="icon" slot="navbar__fixed" />
+
+      <Fragment slot="navbar__content">
+        <li>
+          <Dropdown>
+            <Fragment slot="dropdown__trigger">
+              <Btn value={{ href: "#", name: "Clase" }} type="link" text />
+            </Fragment>
+
+            <ul slot="dropdown__content">
+              <li>
+                <Btn value={{ href: "#", name: "Yoga" }} type="link" text />
+              </li>
+              <li>
+                <Btn
+                  value={{ href: "#", name: "Pilates" }}
+                  type="link"
+                  outlined
+                />
+              </li>
+              <li>
+                <Btn
+                  value={{ href: "#", name: "Theta Healing" }}
+                  type="link"
+                  solid
+                />
+              </li>
+              <li>
+                <Btn value={{ href: "#", name: "Yoga" }} type="link" text />
+              </li>
+            </ul>
+          </Dropdown>
+        </li>
+        <li>
+          <Dropdown>
+            <Fragment slot="dropdown__trigger">
+              <Btn value={{ href: "#", name: "Vindecare" }} type="link" text />
+            </Fragment>
+
+            <ul slot="dropdown__content">
+              <li>
+                <Btn value={{ href: "#", name: "Masaj" }} type="link" text />
+              </li>
+              <li>
+                <Btn
+                  value={{ href: "#", name: "Masaj 2" }}
+                  type="link"
+                  outlined
+                />
+              </li>
+            </ul>
+          </Dropdown>
+        </li>
+        <li></li>
+        <li><Btn value={{ href: "#", name: "Program" }} type="link" text /></li>
+        <li><Btn value={{ href: "#", name: "Preturi" }} type="link" text /></li>
+        <li>
+          <Btn value={{ href: "#", name: "Evenimente" }} type="link" text />
+        </li>
+        <li>
+          <Btn value={{ href: "#", name: "Instructori" }} type="link" text />
+        </li>
+        <li><Btn value={{ href: "#", name: "Blog" }} type="link" text /></li>
+        <li>
+          <Btn value={{ href: "#", name: "Contact" }} type="link" outlined />
+        </li>
+      </Fragment>
+    </Navbar>
+    <slot />
+  </body>
+</html>
+<style is:global lang="scss">
+  @use "../shared/style/base.scss" as *;
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;800&display=swap");
+
+  :root {
+    font-family: "Open Sans", sans-serif;
+    color: var(--cl-black);
+
+    --cl-liniar: linear-gradient(
+      180deg,
+      rgba(177, 142, 206, 1) 0%,
+      rgba(216, 215, 246, 1) 100%
+    );
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background: var(--cl-white);
+  }
+</style>

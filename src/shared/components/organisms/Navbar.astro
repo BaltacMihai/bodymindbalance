@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import menuIcon from "./../../icons/menu.svg";
+import closeIcon from "./../../icons/close.svg";
+---
+
+<!-- _________________________ Start Navigation _________________________ -->
+<nav class="navbar">
+  <slot name="navbar__fixed" />
+  <div class="navbar__icons">
+    <Image src={menuIcon} alt="Open Menu Icon" id="open-menu" class="icon" />
+    <Image
+      src={closeIcon}
+      alt="Close Menu Icon"
+      id="close-menu"
+      class="icon"
+      style="display: none"
+      ;
+    />
+  </div>
+  <ul id="navbar__content" data-visible="false">
+    <slot name="navbar__content" />
+  </ul>
+  <script>
+    const triggerMobileNavigation = () => {
+      const navbar__content = document.getElementById("navbar__content");
+      const openMenu = document.getElementById("open-menu");
+      const closeMenu = document.getElementById("close-menu");
+
+      function toggleMenu() {
+        if (navbar__content?.dataset.visible == "false") {
+          navbar__content.style.display = "flex";
+          openMenu.style.display = "none";
+          closeMenu.style.display = "flex";
+          navbar__content.dataset.visible = "true";
+        } else {
+          navbar__content.style.display = "none";
+          openMenu.style.display = "flex";
+          closeMenu.style.display = "none";
+          navbar__content.dataset.visible = "false";
+        }
+      }
+
+      openMenu?.addEventListener("click", toggleMenu);
+      closeMenu?.addEventListener("click", toggleMenu);
+    };
+    // Runs on initial navigation
+    triggerMobileNavigation();
+
+    // Runs on view transitions navigation
+    document.addEventListener("astro:after-swap", triggerMobileNavigation);
+  </script>
+</nav>
+<!-- _________________________ Finish Navigation _________________________ -->
+
+<style lang="scss" scoped>
+  @use "./../../style/_responsive.scss" as *;
+
+  nav {
+    --_navbar_backgorund: var(--cl-white);
+    --_padding-x: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: fixed;
+    background: var(--_navbar_backgorund);
+    width: calc(100% - var(--_padding-x) * 2);
+    padding-inline: var(--_padding-x);
+
+    @include responsive(md) {
+      flex-wrap: wrap;
+    }
+
+    .navbar__icons {
+      display: none;
+
+      .icon {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      @include responsive(md) {
+        display: flex;
+      }
+    }
+
+    #navbar__content {
+      display: flex;
+
+      :global(li) {
+        list-style: none;
+        display: flex;
+      }
+
+      @include responsive-min(md) {
+        display: flex !important;
+      }
+
+      @include responsive(md) {
+        display: none;
+        flex: 0 0 100%;
+
+        padding-bottom: 1rem;
+
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+    }
+  }
+</style>

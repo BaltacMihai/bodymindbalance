@@ -1,0 +1,57 @@
+---
+// Extended Version of astro-seo
+import { SEO } from "astro-seo";
+
+interface Props {
+  viewport?: string;
+  charset?: string;
+  icon: string;
+  keywords: string;
+  titleTemplate: string;
+  title: string;
+  titleDefault: string;
+
+  description: string;
+  og: {
+    title: string;
+    image: string;
+  };
+  siteMapHref?: string;
+}
+
+const {
+  viewport = "width=device-width, initial-scale=1.0",
+  charset = "UTF-8",
+  icon,
+  keywords,
+  titleTemplate,
+  title,
+  titleDefault,
+  description,
+  og,
+  siteMapHref,
+} = Astro.props;
+---
+
+<meta name="viewport" content={viewport} />
+<link rel="icon" type="image/svg+xml" href={icon} />
+
+{keywords && <meta name="keywords" content={keywords} />}
+<SEO
+  charset={charset}
+  titleTemplate={titleTemplate}
+  title={title}
+  titleDefault={titleDefault}
+  description={description}
+  openGraph={{
+    basic: {
+      title: og.title,
+      type: "website",
+      image: og.image,
+    },
+    optional: {
+      description: description,
+    },
+  }}
+/>
+<link rel="sitemap" href={siteMapHref} />

@@ -1,0 +1,52 @@
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px,
+);
+$padding-content: 2rem;
+$_max-width: map-get($breakpoints, xxl);
+
+@mixin responsiveBase($breakpoint, $type) {
+  $valid-types: (min, max);
+  @if map-has-key($breakpoints, $breakpoint) {
+    @if index($valid-types, $type) {
+      @media (#{$type}-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+      }
+    } @else {
+      @error "Invalid media type: #{$type}. Please use 'min' or 'max'.";
+    }
+  } @else {
+    @error "Invalid breakpoint: #{$breakpoint}. Please use one of the defined breakpoints.";
+  }
+}
+
+@mixin responsive($breakpoint) {
+  @include responsiveBase($breakpoint, max) {
+    @content;
+  }
+}
+
+@mixin responsive-min($breakpoint) {
+  @include responsiveBase($breakpoint, min) {
+    @content;
+  }
+}
+
+%max-content-width {
+  max-width: $_max-width;
+  margin-inline: auto;
+
+  @include responsive(xxl) {
+    padding: $padding-content;
+  }
+}
+
+// .element{
+//  @include responsive(md) {
+//    width: 30%;
+//  }
+// }

@@ -1,0 +1,20 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const isInDev = import.meta.env.DEV;
+---
+
+<!-- Insights Header -->{
+  !isInDev && (
+    <>
+      <script src="https://getinsights.io/js/insights.js" is:inline />
+      <script is:inline define:vars={{ id }}>
+        insights.init(id); insights.trackPages();
+      </script>
+    </>
+  )
+}
+<!-- END Insights Header -->

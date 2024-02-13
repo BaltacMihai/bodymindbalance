@@ -1,0 +1,58 @@
+---
+interface Props {
+  value: { href: string; name: string };
+  type?: string;
+  rel?: string;
+  classList?: string;
+  solid?: boolean;
+  outlined?: boolean;
+  text?: boolean;
+}
+
+const { value, type, rel, solid, outlined, text, classList } = Astro.props;
+---
+
+{
+  type == "link" && (
+    <a
+      href={value.href}
+      class={`btn btn-link btn-${solid ? "solid" : outlined ? "outlined" : text ? "text" : ""} ${classList}`}
+      rel={rel}
+      role="button"
+    >
+      {value.name}
+    </a>
+  )
+}
+
+<style lang="scss" is:global>
+  .btn {
+    --btn-cl: var(--cl-primary);
+    --btn-cl-secondary: var(--cl-white);
+
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius);
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.75;
+    }
+
+    &-link {
+      text-decoration: none;
+    }
+
+    &-solid {
+      background-color: var(--btn-cl);
+      color: var(--btn-cl-secondary);
+    }
+    &-outlined {
+      background-color: var(--btn-cl-secondary);
+      color: var(--btn-cl);
+      border: var(--br-size) solid var(--btn-cl);
+    }
+    &-text {
+      color: var(--btn-cl);
+    }
+  }
+</style>
