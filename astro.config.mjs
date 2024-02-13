@@ -4,4 +4,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   output: "static",
   site: "https://baltacmihai.com/bodymindbalance/",
+  build: {
+    assetsPrefix: ".",
+  },
 });
