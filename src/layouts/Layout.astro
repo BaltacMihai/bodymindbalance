@@ -78,7 +78,6 @@ const { title } = Astro.props;
             </ul>
           </Dropdown>
         </li>
-        <li></li>
         <li><Btn value={{ href: "#", name: "Program" }} type="link" text /></li>
         <li><Btn value={{ href: "#", name: "Preturi" }} type="link" text /></li>
         <li>
@@ -93,11 +92,14 @@ const { title } = Astro.props;
         </li>
       </Fragment>
     </Navbar>
-    <slot />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
 <style is:global lang="scss">
   @use "../shared/style/base.scss" as *;
+  @use "../shared/style/_responsive.scss" as *;
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;800&display=swap");
 
   :root {
@@ -109,6 +111,25 @@ const { title } = Astro.props;
       rgba(177, 142, 206, 1) 0%,
       rgba(216, 215, 246, 1) 100%
     );
+  }
+
+  body {
+    --width: 80vw;
+    width: var(--width);
+    margin: 0 auto;
+
+    @include responsive(md) {
+      --width: 90vw;
+    }
+
+    nav {
+      width: var(--width) !important;
+      --_padding-x: 0 !important;
+    }
+  }
+
+  main {
+    padding-top: 7.5rem;
   }
 
   * {

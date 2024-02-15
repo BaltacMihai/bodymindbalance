@@ -68,8 +68,11 @@ import closeIcon from "./../../icons/close.svg";
     background: var(--_navbar_backgorund);
     width: calc(100% - var(--_padding-x) * 2);
     padding-inline: var(--_padding-x);
+    padding-top: 1rem;
 
-    @include responsive(md) {
+    z-index: var(--max-z-index);
+
+    @include responsive(xl) {
       flex-wrap: wrap;
     }
 
@@ -82,7 +85,7 @@ import closeIcon from "./../../icons/close.svg";
         }
       }
 
-      @include responsive(md) {
+      @include responsive(xl) {
         display: flex;
       }
     }
@@ -95,11 +98,11 @@ import closeIcon from "./../../icons/close.svg";
         display: flex;
       }
 
-      @include responsive-min(md) {
+      @include responsive-min(xl) {
         display: flex !important;
       }
 
-      @include responsive(md) {
+      @include responsive(xl) {
         display: none;
         flex: 0 0 100%;
 

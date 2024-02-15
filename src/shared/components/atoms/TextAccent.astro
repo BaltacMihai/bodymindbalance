@@ -1,0 +1,13 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+
+const regex = /#([^#]+)#/g;
+
+const compiledText = text.replace(regex, '<span class="accent">$1</span>');
+---
+
+<Fragment set:html={compiledText} />

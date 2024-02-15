@@ -1,53 +1,279 @@
 ---
-import homepageText from "../text/homepage.json";
-import accentText from "../shared/functions/accentText.js";
-
 import Layout from "../layouts/Layout.astro";
-import HeroImg from "../components/svg/HeroImg.astro";
-
+import { Image } from "astro:assets";
 import Btn from "../shared/components/atoms/Btn.astro";
+import TextAccent from "../shared/components/atoms/TextAccent.astro";
+
+// Import imgs
+
+import HeroImg from "../components/svg/HeroImg.astro";
+import yogaImg from "../assets/yoga.svg";
+import pilatesImg from "../assets/pilates.svg";
+
+const content = {
+  hero: {
+    h1: "#Bucuria# este adevărata ta natură",
+    subtext:
+      "Te invităm sa descoperi cea mai potrivită metodă adaptată nevoilor tale!",
+    cta: "Descoperă clasele noastre",
+  },
+  stats: [
+    "#15# ani de activitate",
+    "#250 +# cursanti",
+    "#10k +# ore practicate",
+  ],
+  classes: {
+    h2: "Descoperă #echilibrul# interior",
+    cta: "Descoperă",
+    class: [
+      {
+        title: "Yoga",
+        description:
+          "La clasele de Yoga descoperi una dintre cele mai vechi metode de autocunoaștere și dezvoltare personală!",
+        img: yogaImg,
+        link: "",
+      },
+      {
+        title: "Pilates",
+        description:
+          "“În 10 ședinte veți simti diferența, în 20 veți vedea diferența și în 30 veți avea un corp nou” – Joseph Pilates",
+        img: pilatesImg,
+        link: "",
+      },
+    ],
+  },
+};
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
-    <h1>
-      <Fragment set:html={accentText(homepageText.h1)} />
-    </h1>
-    <p>
-      Te invităm sa descoperi cea mai potrivită metodă adaptată nevoilor tale!
-    </p>
-    <Btn
-      value={{ href: "./rest", name: "Descoperă clasele noastre" }}
-      type="link"
-      solid
-      classList="cta"
-    />
-    <HeroImg />
-  </main>
+  <section id="hero">
+    <div class="hero_left">
+      <h1>
+        <TextAccent text={content.hero.h1} />
+      </h1>
+      <p>
+        {content.hero.subtext}
+      </p>
+      <Btn
+        value={{ href: "./rest", name: content.hero.cta }}
+        type="link"
+        solid
+        classList="cta"
+      />
+    </div>
+    <div class="hero_right">
+      <HeroImg />
+    </div>
+  </section>
+
+  <section id="stats">
+    {
+      content.stats?.map((stat) => (
+        <p>
+          <TextAccent text={stat} />
+        </p>
+      ))
+    }
+  </section>
+
+  <section id="classes">
+    <h2>
+      <TextAccent text={content.classes.h2} />
+    </h2>
+    <div class="classes">
+      {
+        content.classes.class?.map((classItem) => {
+          return (
+            <div class="card">
+              <a href="">
+                <h3>{classItem.title}</h3>
+                <p>{classItem.description}</p>
+                <Btn
+                  value={{ href: "./rest", name: content.classes.cta }}
+                  type="link"
+                  text
+                />
+                <Image src={classItem.img} alt="Arrow Icon" class="card-img" />
+              </a>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
 
   <style lang="scss" is:global>
-    h1 .accent {
-      font-weight: 800;
-
-      background: var(--cl-liniar);
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-    }
-
-    main {
-      padding-top: 5rem;
-    }
-
-    .cta {
-      outline: var(--br-size) solid var(--cl-secondary);
-      animation: 0.75s pulse infinite alternate ease;
-    }
+    @use "../shared/style/_responsive.scss" as *;
 
     @keyframes pulse {
       to {
         outline-width: calc(var(--br-size) * 7);
+      }
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 2rem;
+
+      .accent {
+        font-weight: 800;
+
+        background: var(--cl-liniar);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-text-fill-color: transparent;
+      }
+    }
+
+    #hero {
+      @include responsive(sm) {
+        flex-wrap: wrap;
+        text-align: center;
+      }
+
+      .hero_left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: baseline;
+
+        position: relative;
+        bottom: 5rem;
+        h1,
+        p {
+          padding-block: 1rem;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+
+        .cta {
+          margin-top: 4rem;
+          outline: var(--br-size) solid var(--cl-secondary);
+          animation: 0.75s pulse infinite alternate ease;
+        }
+      }
+
+      .hero_left,
+      .hero_right {
+        flex: 0 0 40%;
+
+        @include responsive(sm) {
+          flex: 0 0 100%;
+          align-items: center;
+        }
+      }
+
+      .hero_right {
+        flex: 0 0 45%;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    #stats {
+      padding-top: 1rem;
+
+      @include responsive(sm) {
+        flex-direction: column;
+        gap: 3rem;
+      }
+
+      p {
+        // font-weight: bold;
+      }
+      .accent {
+        font-size: 48px;
+        position: relative;
+        bottom: 1rem;
+        left: 0.5ch;
+      }
+    }
+
+    #classes {
+      flex-direction: column;
+      h2 {
+        font-size: 32px;
+        text-align: center;
+        width: 100%;
+        padding-bottom: 3rem;
+      }
+
+      .classes {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5%;
+
+        .card {
+          --_card-color: var(--cl-primary);
+
+          background-color: var(--_card-color);
+          padding: 2rem;
+          height: 250px;
+          position: relative;
+          transition:
+            opacity 0.25s linear,
+            box-shadow 0.25s linear;
+
+          border-radius: calc(var(--border-radius) * 2);
+
+          a {
+            text-decoration: none;
+            color: var(--cl-black);
+          }
+
+          h3 {
+            font-size: 32px;
+          }
+
+          .card-img {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+
+            width: auto;
+            height: 175px;
+
+            opacity: 0.75;
+            transition: opacity 0.25s linear;
+          }
+
+          .btn {
+            --btn-cl: var(--cl-black);
+            border-bottom: 1px solid var(--cl-black);
+            border-radius: 0;
+            padding: 0;
+            padding-bottom: 3px;
+
+            position: absolute;
+            bottom: 2rem;
+          }
+
+          &:nth-child(2) {
+            --_card-color: var(--cl-secondary);
+          }
+
+          &:hover {
+            cursor: pointer;
+            box-shadow: -1px 0px 15px 1px var(--_card-color);
+
+            .card-img {
+              opacity: 1;
+            }
+          }
+        }
+        &:has(.card:hover) .card:not(:hover) {
+          // filter: blur(2px);
+          opacity: 0.8;
+        }
+        // filter: blur(4px);
       }
     }
   </style>

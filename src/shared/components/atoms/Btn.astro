@@ -18,7 +18,6 @@ const { value, type, rel, solid, outlined, text, classList } = Astro.props;
       href={value.href}
       class={`btn btn-link btn-${solid ? "solid" : outlined ? "outlined" : text ? "text" : ""} ${classList}`}
       rel={rel}
-      role="button"
     >
       {value.name}
     </a>
