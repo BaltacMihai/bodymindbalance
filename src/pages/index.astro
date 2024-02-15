@@ -163,7 +163,7 @@ const content = {
         flex: 0 0 40%;
 
         @include responsive(sm) {
-          flex: 0 0 100%;
+          flex: 0 0 100% !important;
           align-items: center;
         }
       }
@@ -210,6 +210,11 @@ const content = {
         align-items: center;
         justify-content: space-between;
         gap: 5%;
+
+        @include responsive(sm) {
+          flex-direction: column;
+          gap: 3rem;
+        }
 
         .card {
           --_card-color: var(--cl-primary);
