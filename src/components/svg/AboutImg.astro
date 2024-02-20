@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+
+import imgAbout from "./../../assets/about_img.png";
+---
+
+<div id="svg-about">
+  <svg
+    width="482"
+    height="494"
+    viewBox="0 0 617 502"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <g id="Group 61">
+      <g id="Group 60">
+        <circle
+          id="Ellipse 10"
+          cx="349"
+          cy="251"
+          r="249.5"
+          stroke="#B18ECE"
+          stroke-width="3"></circle>
+        <circle id="circle" cx="470" cy="32" r="16" fill="#B18ECE"></circle>
+        <circle id="circle-2" cx="601" cy="232" r="16" fill="#B18ECE"></circle>
+        <circle id="circle-3" cx="502" cy="447" r="16" fill="#B18ECE"></circle>
+      </g>
+      <g id="Group 59">
+        <circle
+          id="Ellipse 10_2"
+          cx="265.863"
+          cy="261.863"
+          r="230.863"
+          fill="#B18ECE"></circle>
+        <path
+          id="Intersect"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M332.814 483.058C446.483 447.557 528.982 341.46 528.982 216.095C528.982 170.33 517.988 127.132 498.497 89H0.204071C0.135944 89.1333 0.0679198 89.2666 0 89.4V342.789C33.866 409.309 93.5676 460.471 165.887 483.058H332.814Z"
+          fill="url(#pattern0)"></path>
+      </g>
+    </g>
+    <defs>
+      <pattern
+        id="pattern0"
+        patternContentUnits="objectBoundingBox"
+        width="1"
+        height="1"
+      >
+        <use
+          xlink:href="#image0_706_482"
+          transform="matrix(0.00182583 0 0 0.00245098 -0.0587025 0)"></use>
+      </pattern>
+    </defs>
+  </svg>
+
+  <Image src={imgAbout} alt="Da" id="about-img-element" />
+</div>
+
+<style lang="scss">
+  #svg-about {
+    position: relative;
+    transform-origin: center;
+
+    #about-img-element {
+      position: absolute;
+      right: 36%;
+      bottom: 12.5%;
+      width: 90%;
+      height: auto;
+      max-width: 35vw;
+    }
+    [id^="circle"] {
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      transform-origin: center;
+      animation-name: display-opacity;
+      animation-direction: alternate;
+    }
+
+    @keyframes display-opacity {
+      to {
+        opacity: 0;
+      }
+    }
+  }
+</style>

@@ -7,8 +7,12 @@ import TextAccent from "../shared/components/atoms/TextAccent.astro";
 // Import imgs
 
 import HeroImg from "../components/svg/HeroImg.astro";
+import AboutImg from "../components/svg/AboutImg.astro";
 import yogaImg from "../assets/yoga.svg";
 import pilatesImg from "../assets/pilates.svg";
+import cadou240Img from "../assets/cadou_240.png";
+import cadou180Img from "../assets/cadou_180.png";
+import arrowRightIcon from "../assets/arrow-right.svg";
 
 const content = {
   hero: {
@@ -41,6 +45,78 @@ const content = {
         link: "",
       },
     ],
+  },
+  gifts: {
+    h2: "Pachete Cadou",
+    oferts: [
+      {
+        src: cadou240Img,
+        price: "240",
+      },
+      {
+        src: cadou180Img,
+        price: "180",
+      },
+    ],
+    cta: {
+      href: "#",
+      text: "Vizitează studioul nostru ",
+    },
+  },
+  program: {
+    h2: "Program",
+    hours: [
+      {
+        title: "Pilates",
+        imgSrc: pilatesImg,
+        ore: ["Luni #19:30 - 20:20# ", "Miercuri #18:30 - 19:20#"],
+      },
+      {
+        title: "Yoga Flow",
+        imgSrc: yogaImg,
+        ore: ["Luni #20:30 - 21:20# ", "Miercuri #19:30 - 20:20#"],
+      },
+    ],
+
+    ctaText: "Rezerva-ti locul",
+  },
+  prices: {
+    h2: "Preturi",
+    content: [
+      {
+        sessionNo: "#1# sedinta",
+        price: "#60# lei",
+        bonuses: [
+          "55 de minute",
+          "Yoga sau Pilates",
+          "20 lei reducere cu 7Card",
+        ],
+      },
+      {
+        sessionNo: "#8# sedinte",
+        price: "#240# lei",
+        daysValability: "valabilitate 30 de zile",
+        bonuses: ["55 de minute / sedinta", "Yoga sau Pilates"],
+      },
+      {
+        sessionNo: "#4# sedinte",
+        price: "#160# lei",
+        daysValability: "valabilitate 30 de zile",
+        bonuses: ["55 de minute / sedinta", "Yoga sau Pilates"],
+      },
+      {
+        sessionNo: "#1# sedinta",
+        price: "#150# lei",
+        bonuses: ["50 de minute", "Masaj Shiatsu "],
+      },
+      {
+        sessionNo: "#4# sedinta",
+        price: "#500# lei",
+        daysValability: "valabilitate 30 de zile",
+        bonuses: ["50 de minute / sedinta", "Masaj Shiatsu "],
+      },
+    ],
+    ctaText: "Rezerva-ti locul",
   },
 };
 ---
@@ -80,11 +156,11 @@ const content = {
     <h2>
       <TextAccent text={content.classes.h2} />
     </h2>
-    <div class="classes">
+    <div class="container">
       {
         content.classes.class?.map((classItem) => {
           return (
-            <div class="card">
+            <article class="card">
               <a href="">
                 <h3>{classItem.title}</h3>
                 <p>{classItem.description}</p>
@@ -92,9 +168,137 @@ const content = {
                   value={{ href: "./rest", name: content.classes.cta }}
                   type="link"
                   text
+                  appendIcon={arrowRightIcon}
                 />
                 <Image src={classItem.img} alt="Arrow Icon" class="card-img" />
               </a>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <!-- <section id="about">
+    <h2>Despre</h2>
+    <div class="row">
+      <AboutImg class="img" />
+      <div class="cards">
+        <div class="card">
+          <p class="card-title">Bodymind Balance</p>
+          <p>
+            este un concept apărut din dorința de a dezvolta un spațiu armonios,
+            o oază de liniște și alinare chiar în inima orașului București.
+            Studioul nostru îți oferă cadrul ideal deconectării de agitația
+            cotidiană și a reconectării cu propriul corp, cu spațiul interior.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">Bodymind Balance</p>
+          <p>
+            este un concept apărut din dorința de a dezvolta un spațiu armonios,
+            o oază de liniște și alinare chiar în inima orașului București.
+            Studioul nostru îți oferă cadrul ideal deconectării de agitația
+            cotidiană și a reconectării cu propriul corp, cu spațiul interior.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">Bodymind Balance</p>
+          <p>
+            este un concept apărut din dorința de a dezvolta un spațiu armonios,
+            o oază de liniște și alinare chiar în inima orașului București.
+            Studioul nostru îți oferă cadrul ideal deconectării de agitația
+            cotidiană și a reconectării cu propriul corp, cu spațiul interior.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <section id="gifts">
+    <h2>{content.gifts.h2}</h2>
+    <div class="container">
+      {
+        content.gifts.oferts?.map((ofert) => (
+          <span data-price={ofert.price + " lei"} class="gift-offer">
+            <Image src={ofert.src} alt="Arrow Icon" />
+          </span>
+        ))
+      }
+    </div>
+    <Btn
+      value={{ href: "./rest", name: content.gifts.cta.text }}
+      type="link"
+      text
+    />
+  </section>
+
+  <section id="orar">
+    <h2>{content.program.h2}</h2>
+    <div class="container">
+      {
+        content.program.hours?.map((hours) => {
+          return (
+            <article class="card">
+              <Image src={hours.imgSrc} alt="Arrow Icon" class="card-img" />
+              <h3 class="title">{hours.title}</h3>
+
+              {hours.ore?.map((text) => {
+                return (
+                  <p>
+                    <TextAccent text={text} />
+                  </p>
+                );
+              })}
+              <Btn
+                value={{ href: "./rest", name: content.program.ctaText }}
+                type="link"
+                classList="cta"
+                appendIcon={arrowRightIcon}
+              />
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section id="prices">
+    <h2>{content.prices.h2}</h2>
+    <div class="container">
+      {
+        content.prices.content?.map((price) => {
+          return (
+            <div class="card">
+              <div
+                class={
+                  price.daysValability
+                    ? "card__header"
+                    : "card__header card__header--pb"
+                }
+              >
+                <h3>
+                  <TextAccent text={price.sessionNo} />
+                </h3>
+                <p class="price">
+                  <TextAccent text={price.price} />
+                </p>
+              </div>
+              {price.daysValability && (
+                <p class="card__disclaimer">{price.daysValability}</p>
+              )}
+
+              <ul>
+                {price.bonuses?.map((bonus) => {
+                  return <li>{bonus}</li>;
+                })}
+              </ul>
+              <Btn
+                value={{ href: "./rest", name: content.prices.ctaText }}
+                type="link"
+                classList="cta"
+                appendIcon={arrowRightIcon}
+              />
             </div>
           );
         })
@@ -115,7 +319,16 @@ const content = {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-direction: column;
+
       padding-block: 2rem;
+
+      h2 {
+        font-size: 32px;
+        text-align: center;
+        width: 100%;
+        padding-bottom: 3rem;
+      }
 
       .accent {
         font-weight: 800;
@@ -126,9 +339,81 @@ const content = {
         -webkit-text-fill-color: transparent;
         -moz-text-fill-color: transparent;
       }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 100%;
+
+        @include responsive(sm) {
+          flex-direction: column;
+          gap: 3rem;
+        }
+
+        .card {
+          --_card-color: var(--cl-primary);
+
+          background-color: var(--_card-color);
+          padding: 2rem;
+          height: 250px;
+          position: relative;
+          transition:
+            opacity 0.25s linear,
+            box-shadow 0.25s linear;
+
+          border-radius: calc(var(--border-radius) * 2);
+
+          width: -webkit-fill-available;
+
+          a {
+            text-decoration: none;
+            color: var(--cl-black);
+          }
+
+          h3 {
+            font-size: 32px;
+          }
+
+          .card-img {
+            position: absolute;
+            right: 0;
+            bottom: 0.5rem;
+
+            width: auto;
+            height: 175px;
+
+            opacity: 0.75;
+            transition: opacity 0.25s linear;
+          }
+
+          .btn {
+            --btn-cl: var(--cl-black);
+            border-radius: 0;
+            padding: 0;
+            padding-bottom: 3px;
+
+            position: absolute;
+            bottom: 2rem;
+
+            text-decoration-line: underline;
+            text-underline-offset: 5px;
+          }
+
+          &:nth-child(2) {
+            --_card-color: var(--cl-secondary);
+          }
+        }
+      }
+
+      .btn {
+        right: 2rem;
+      }
     }
 
     #hero {
+      flex-direction: row;
       @include responsive(sm) {
         flex-wrap: wrap;
         text-align: center;
@@ -179,6 +464,7 @@ const content = {
 
     #stats {
       padding-top: 1rem;
+      flex-direction: row;
 
       @include responsive(sm) {
         flex-direction: column;
@@ -197,74 +483,11 @@ const content = {
     }
 
     #classes {
-      flex-direction: column;
-      h2 {
-        font-size: 32px;
-        text-align: center;
-        width: 100%;
-        padding-bottom: 3rem;
-      }
-
-      .classes {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 5%;
-
-        @include responsive(sm) {
-          flex-direction: column;
-          gap: 3rem;
+      .container {
+        &:has(.card:hover) .card:not(:hover) {
+          opacity: 0.8;
         }
-
         .card {
-          --_card-color: var(--cl-primary);
-
-          background-color: var(--_card-color);
-          padding: 2rem;
-          height: 250px;
-          position: relative;
-          transition:
-            opacity 0.25s linear,
-            box-shadow 0.25s linear;
-
-          border-radius: calc(var(--border-radius) * 2);
-
-          a {
-            text-decoration: none;
-            color: var(--cl-black);
-          }
-
-          h3 {
-            font-size: 32px;
-          }
-
-          .card-img {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-
-            width: auto;
-            height: 175px;
-
-            opacity: 0.75;
-            transition: opacity 0.25s linear;
-          }
-
-          .btn {
-            --btn-cl: var(--cl-black);
-            border-bottom: 1px solid var(--cl-black);
-            border-radius: 0;
-            padding: 0;
-            padding-bottom: 3px;
-
-            position: absolute;
-            bottom: 2rem;
-          }
-
-          &:nth-child(2) {
-            --_card-color: var(--cl-secondary);
-          }
-
           &:hover {
             cursor: pointer;
             box-shadow: -1px 0px 15px 1px var(--_card-color);
@@ -273,12 +496,211 @@ const content = {
               opacity: 1;
             }
           }
+
+          .btn {
+            left: 2rem;
+            right: unset;
+          }
         }
-        &:has(.card:hover) .card:not(:hover) {
-          // filter: blur(2px);
-          opacity: 0.8;
+      }
+    }
+
+    #about {
+      position: relative;
+
+      .row {
+        display: flex;
+        align-items: center;
+
+        #svg-about {
+          flex: 0 0 60%;
         }
-        // filter: blur(4px);
+        // .card:first-child {
+        //   position: absolute;
+        //   top: 21%;
+        //   left: 49%;
+        //   p:not(:first-child) {
+        //     margin-left: 17%;
+        //   }
+        // }
+      }
+      svg {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        max-width: 35vw;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    #gifts {
+      display: flex;
+
+      &::after {
+        content: "";
+        background-image: linear-gradient(
+          0deg,
+          rgba(253, 248, 252, 1) 0%,
+          rgba(222, 211, 244, 1) 25%,
+          rgba(223, 212, 245, 1) 75%,
+          rgba(253, 248, 252, 1) 100%
+        );
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        overflow-x: hidden;
+        z-index: -1;
+      }
+
+      .gift-offer {
+        position: relative;
+        width: 100%;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+
+        &::after {
+          content: attr(data-price);
+          background: var(--cl-secondary);
+          padding: 0.25rem 1.5rem;
+          border-radius: 10px;
+          font-size: 20px;
+          font-weight: bold;
+          color: var(--cl-gray-light);
+          position: absolute;
+          z-index: 1;
+          top: -1%;
+          right: -2%;
+          transform: rotate(25deg);
+          box-shadow: -1px 0px 15px 1px var(--cl-secondary);
+          transition: transform 1s ease;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &::after {
+            animation-duration: 0.25s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            transform-origin: center;
+            animation-name: shake;
+            animation-direction: alternate;
+          }
+        }
+
+        @keyframes shake {
+          to {
+            transform: rotate(35deg);
+          }
+        }
+      }
+    }
+
+    #orar {
+      .card {
+        flex-grow: 1;
+
+        p {
+          font-size: 20px;
+          font-weight: bold;
+          display: flex;
+          flex-direction: column;
+          margin-top: 1rem;
+
+          .accent {
+            font-weight: normal;
+            background: none;
+            color: var(--cl-black);
+            -webkit-text-fill-color: var(--cl-black);
+            -moz-text-fill-color: var(--cl-black);
+            padding-left: 2rem;
+          }
+        }
+
+        .card-img {
+          bottom: unset;
+          top: 1rem;
+          right: 1rem;
+          opacity: 0.25;
+          @include responsive(sm) {
+            opacity: 0.15;
+          }
+        }
+      }
+    }
+
+    #prices {
+      .container {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        @include responsive(md) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include responsive(sm) {
+          display: flex;
+        }
+
+        .card {
+          &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &--pb {
+              padding-bottom: calc(16px + 1rem);
+            }
+
+            h3,
+            p {
+              font-size: 20px;
+              font-weight: normal;
+
+              .accent {
+                font-size: 32px;
+
+                color: var(--cl-black);
+                -webkit-text-fill-color: var(--cl-black);
+                -moz-text-fill-color: var(--cl-black);
+              }
+            }
+          }
+
+          &__disclaimer {
+            color: var(--cl-gray);
+            font-size: 16px;
+            padding-bottom: 1rem;
+          }
+          &:last-child {
+            grid-area: 2 / 2 / 3 / 4;
+            @include responsive(md) {
+              grid-area: 3 / 1 / 4 / 3;
+            }
+          }
+        }
+
+        ul {
+          padding-left: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          li {
+            padding-left: 0.5rem;
+
+            &::marker {
+              content: url("./../assets/checked.svg");
+            }
+          }
+        }
       }
     }
   </style>

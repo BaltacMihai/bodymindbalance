@@ -72,6 +72,18 @@ import closeIcon from "./../../icons/close.svg";
 
     z-index: var(--max-z-index);
 
+    &::before {
+      content: "";
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 80px;
+      width: 100vw;
+      display: block;
+      background: var(--_navbar_backgorund);
+      z-index: -1;
+    }
+
     @include responsive(xl) {
       flex-wrap: wrap;
     }
