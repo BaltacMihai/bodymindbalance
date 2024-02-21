@@ -1,5 +1,6 @@
 name: Deploy to GitHub Pages
 
+
 on:
   # Trigger the workflow every time you push to the `main` branch
   # Using a different branch name? Replace `main` with your branch’s name
@@ -9,17 +10,14 @@ on:
   workflow_dispatch:
 
 # Allow this job to clone the repo and create a page deployment
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: write-all
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       # also other environment variable
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
