@@ -1,0 +1,35 @@
+---
+interface Props {
+  name: string;
+  forLabel: string;
+  type?: string;
+  isTextArea?: boolean;
+  isRequired?: boolean;
+  placeholder?: string;
+}
+
+const { name, forLabel, type, isTextArea, isRequired, placeholder } =
+  Astro.props;
+
+const _inputType = isTextArea ? "<textarea cols='30' rows='10'" : "<input";
+const _requiredAttr = isRequired ? " required" : "";
+const _typeAttr = !isTextArea && type ? ` type="${type}"` : "";
+const _placeholderAttr = placeholder ? ` placeholder="${placeholder}"` : "";
+const _closingTag = isTextArea ? "></textarea>" : "/>";
+
+const inputHTML = `
+  ${_inputType}
+  ${_requiredAttr}
+  ${_typeAttr}
+  name="${forLabel}"
+  id="${forLabel}"
+  ${_placeholderAttr}
+  ${_closingTag}
+`;
+---
+
+<label for={forLabel}>
+  {name}
+</label>
+
+<Fragment set:html={inputHTML} />

@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 
 interface Props {
-  value: { href: string; name: string };
+  value: { href?: string; name: string };
   type?: string;
   rel?: string;
   classList?: string;
@@ -24,27 +24,33 @@ const {
   prepandIcon,
   appendIcon,
 } = Astro.props;
+
+let btnStartTag, btnCloseTag;
+let btnClass = `btn btn-${solid ? "solid" : outlined ? "outlined" : "text"} ${classList || ""}`;
+
+switch (type) {
+  case "link":
+  default:
+    btnStartTag = `<a href="${value.href}" class="${btnClass} btn-link" rel="${rel || ""}"> `;
+    btnCloseTag = "</a>";
+    break;
+
+  case "button":
+    btnStartTag = `<button class="${btnClass}" type="submit">`;
+    btnCloseTag = "</button>";
+    break;
+}
 ---
 
-{
-  type == "link" && (
-    <a
-      href={value.href}
-      class={`btn btn-link btn-${solid ? "solid" : outlined ? "outlined" : text ? "text" : ""} ${classList}`}
-      rel={rel}
-    >
-      {prepandIcon && (
-        <Image src={prepandIcon} alt="Arrow Icon" class="btn__icon" />
-      )}
+<Fragment set:html={btnStartTag} />
 
-      {value.name}
+{prepandIcon && <Image src={prepandIcon} alt="Arrow Icon" class="btn__icon" />}
 
-      {appendIcon && (
-        <Image src={appendIcon} alt="Arrow Icon" class="btn__icon" />
-      )}
-    </a>
-  )
-}
+{value.name}
+
+{appendIcon && <Image src={appendIcon} alt="Arrow Icon" class="btn__icon" />}
+
+<Fragment set:html={btnCloseTag} />
 
 <style lang="scss" is:global>
   .btn {

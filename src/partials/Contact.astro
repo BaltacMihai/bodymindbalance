@@ -1,0 +1,48 @@
+---
+import Form from "./../shared/components/molecules/Form.astro";
+
+const content = {
+  title: "Contact",
+
+  form: {
+    action: "#",
+    inputs: [
+      {
+        name: "Nume",
+        type: "text",
+        forLabel: "entry.1746657893",
+      },
+      {
+        name: "Email",
+        type: "email",
+        forLabel: "entry.681705955",
+      },
+      {
+        name: "Telefon",
+        type: "tel",
+        forLabel: "entry.664386807",
+      },
+      {
+        name: "Mesaj",
+        isTextArea: true,
+        forLabel: "entry.2135235855",
+      },
+      {
+        name: "Mesaj6",
+        type: "tel",
+        forLabel: "entry.21352358551",
+      },
+    ],
+  },
+};
+---
+
+<!-- <Fragment set:html={content.title} /> -->
+<h2>{content.title}</h2>
+
+<Form
+  action={content.form.action}
+  thanksRedirect="https/asd"
+  formElements={content.form.inputs}
+  submitText="DA"
+/>

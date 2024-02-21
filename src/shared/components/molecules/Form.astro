@@ -1,0 +1,55 @@
+---
+import { Input, Btn } from "@baltacmihai/astro-utils";
+
+interface Props {
+  action: string;
+  thanksRedirect: string;
+  formElements: {
+    name: string;
+    forLabel: string;
+    type: string;
+    isTextArea: boolean;
+  }[];
+  submitText: string;
+}
+
+const { action, thanksRedirect, formElements, submitText } = Astro.props;
+---
+
+<!-- _________________________ Start Form _________________________ -->
+<script is:inline>
+  var submitted = false;
+</script>
+<iframe
+  name="hidden_iframe"
+  id="hidden_iframe"
+  style="display:none;"
+  onload="
+          if (submitted) { window.location = './../multumim'; }
+          "
+>
+</iframe>
+
+<form
+  action={action}
+  method="post"
+  class="contact__options-form"
+  target="hidden_iframe"
+  onsubmit="submitted = true;"
+>
+  {
+    formElements?.map((input) => {
+      return (
+        <Input
+          name={input.name}
+          forLabel={input.forLabel}
+          type={input.type}
+          isTextArea={input.isTextArea}
+        />
+      );
+    })
+  }
+  <!-- <button type="submit">{submitText}</button> -->
+  <Btn value={{ name: submitText }} type="button" />
+  <!-- _________________________ Finish Form _________________________ -->
+</form>
