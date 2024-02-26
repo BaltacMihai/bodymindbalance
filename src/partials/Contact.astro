@@ -1,5 +1,10 @@
 ---
-import { Form } from "@baltacmihai/astro-utils";
+import { Form, Btn } from "@baltacmihai/astro-utils";
+
+import facebookIcon from "../assets/social/facebook.svg";
+import instagramIcon from "../assets/social/instagram.svg";
+import youtubeIcon from "../assets/social/youtube.svg";
+import tiktokIcon from "../assets/social/tiktok.svg";
 
 const content = {
   title: "Contact",
@@ -27,22 +32,223 @@ const content = {
         isTextArea: true,
         forLabel: "entry.2135235855",
       },
-      {
-        name: "Mesaj6",
-        type: "tel",
-        forLabel: "entry.21352358551",
-      },
     ],
   },
+
+  directContact: {
+    phone: {
+      name: "+40727121308",
+      get href() {
+        return `tel:${this.name}`;
+      },
+    },
+    email: {
+      name: "baltacmihaicristian@gmail.com",
+      get href() {
+        return `mailto:${this.name}`;
+      },
+    },
+    location: {
+      name: "Str. Ionel Perlea nr. 8 Sector 1, Bucuresti, Romania",
+      href: "https://www.google.com/maps/place/Con+Sabor+Dance+School+-+Kizomba,+Bachata,+Salsa/@44.435481,26.087462,18z/data=!4m6!3m5!1s0x40b1f8a972593359:0xf0b37f82daf0c100!8m2!3d44.4354815!4d26.0874624!16s%2Fg%2F11y27kcmg?hl=en&entry=ttu",
+    },
+  },
+  socialMedia: [
+    {
+      href: "",
+      icon: facebookIcon,
+    },
+    {
+      href: "",
+      icon: instagramIcon,
+    },
+    {
+      href: "",
+      icon: youtubeIcon,
+    },
+    {
+      href: "",
+      icon: tiktokIcon,
+    },
+  ],
 };
 ---
 
 <!-- <Fragment set:html={content.title} /> -->
 <h2>{content.title}</h2>
 
-<Form
-  action={content.form.action}
-  thanksRedirect="https/asd"
-  formElements={content.form.inputs}
-  submitText="DA"
-/>
+<div id="form__container">
+  <Form
+    action={content.form.action}
+    thanksRedirect="https/asd"
+    formElements={content.form.inputs}
+    submitText="Rezervă-ți locul"
+  />
+
+  <div id="form__social">
+    <ul id="form__social__direct">
+      <li>
+        <p class="title">Telefon</p>
+        <Btn value={content.directContact.phone} type="simple" rel="nofollow" />
+      </li>
+
+      <li>
+        <p class="title">Email</p>
+        <Btn value={content.directContact.email} type="simple" rel="nofollow" />
+      </li>
+
+      <li>
+        <p class="title">Locație</p>
+        <Btn
+          value={content.directContact.location}
+          type="simple"
+          rel="nofollow"
+        />
+      </li>
+    </ul>
+    <div id="form__social__directmedia">
+      <p class="title">Urmărește-ne pe rețelele sociale</p>
+      <ul class="social-links">
+        {
+          content.socialMedia?.map((link) => {
+            return (
+              <li>
+                <Btn
+                  value={{ href: link.href, name: "" }}
+                  solid
+                  type="link"
+                  rel="nofollow"
+                  appendIcon={link.icon}
+                />
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<iframe
+  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1424.4434783622403!2d26.087462!3d44.435481!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1f8a972593359%3A0xf0b37f82daf0c100!2sCon%20Sabor%20Dance%20School%20-%20Kizomba%2C%20Bachata%2C%20Salsa!5e0!3m2!1sen!2sro!4v1708942478994!5m2!1sen!2sro"
+  allowfullscreen=""
+  loading="lazy"
+  class="i-frame"
+  referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+<style lang="scss" is:global>
+  @use "../shared/style/_responsive.scss" as *;
+
+  #form__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    @include responsive(md) {
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+
+    form,
+    #form__social {
+      flex: 0 0 45%;
+      @include responsive(md) {
+        flex: 0 0 100%;
+      }
+    }
+
+    form {
+      .form-group {
+        align-items: normal;
+        padding: 0;
+        margin-bottom: 1rem;
+
+        label {
+          padding-bottom: 0.25rem;
+        }
+      }
+
+      .btn {
+        width: fit-content;
+        outline: var(--br-size) solid var(--cl-secondary);
+        animation: 0.75s pulse infinite alternate ease;
+
+        background-color: var(--btn-cl);
+        color: var(--btn-cl-secondary);
+        border: none;
+
+        font-weight: bold;
+        @include responsive(md) {
+          width: 100%;
+        }
+      }
+    }
+
+    #form__social {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      @include responsive(md) {
+        align-items: center;
+
+        #form__social__directmedia {
+          margin-top: 4rem;
+        }
+
+        li {
+          text-align: center;
+        }
+      }
+
+      p.title {
+        color: var(--cl-primary);
+        padding-block: 0.25rem;
+        font-weight: bold;
+      }
+
+      #form__social__direct,
+      .social-links {
+        list-style-type: none;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      #form__social__direct {
+        a {
+          padding: 0;
+        }
+      }
+
+      .social-links {
+        flex-direction: row;
+
+        p.title {
+          padding-bottom: 0.5rem;
+        }
+        a {
+          --border-radius: 50px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: calc(var(--border-radius) / 1.5);
+          height: calc(var(--border-radius) / 1.5);
+
+          padding: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .i-frame {
+    width: 100%;
+    height: 40vh;
+    border-radius: calc(var(--border-radius) * 2);
+    border: none;
+    margin-top: 3rem;
+  }
+</style>
